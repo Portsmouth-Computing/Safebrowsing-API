@@ -10,7 +10,7 @@ services:
     volumes:
       - ./:/app
     ports:
-      - 880:8000
+      - 881:8000
 
   postgres:
     image: postgres:10-alpine
