@@ -27,7 +27,7 @@ SOFTWARE.
 import sanic
 
 import logging
-import helpers
+from .helpers import url_validator
 
 bp = sanic.Blueprint('API-Routes')
 log = logging.getLogger(__name__)
@@ -46,7 +46,7 @@ async def ip_redirect_tracker(request):
                 "addresses" (array) keys."""
             return sanic.response.json({"error": error}, status=400)
 
-    if await helpers.url_validator(url):
+    if await url_validator(url):
         pass
     else:
         return sanic.response.json({"error": "URL is not in a valid format. Please try again."}, status=400)
