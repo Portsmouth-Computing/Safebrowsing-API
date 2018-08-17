@@ -27,7 +27,26 @@ SOFTWARE.
 import sanic
 
 import logging
+import helpers
 
 bp = sanic.Blueprint('API-Routes')
 log = logging.getLogger(__name__)
 
+
+@bp.route("/ip/redirect", methods=["GET"])
+async def ip_redirect_tracker(request):
+    try:
+        url = request.args["url"]
+    except KeyError:
+        try:
+            url = request.json.get("url")
+        except (AttributeError, KeyError):
+            error = """Please specify one or more IP Addresses under the "ip" query parameter
+                (multiple or space separated) or as a json body under the "ip" (single) or
+                "addresses" (array) keys."""
+            return sanic.response.json({"error": error}, status=400)
+
+    if await helpers.url_validator(url):
+        pass
+    else:
+        return sanic.response.json({"error": "URL is not in a valid format. Please try again."}, status=400)
