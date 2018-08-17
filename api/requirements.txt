@@ -2,3 +2,4 @@ aiohttp
 asyncpg
 ruamel.yaml
 sanic
+validators
